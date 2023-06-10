@@ -30,7 +30,7 @@ var wordArray = Array.from(word)
 
 //loads an array = length of word, with underscores and converts to string to display to user
 for(let i=0; i<word.length; i++){
-  wordDisplayArray[i] = ("_ ")
+  wordDisplayArray[i] = ("_")
 } 
 var wordDisplay = wordDisplayArray.join('')
 
