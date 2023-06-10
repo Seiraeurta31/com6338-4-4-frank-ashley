@@ -21,18 +21,21 @@ var winsEL = document.getElementById ('wins')
 var lossesEL = document.getElementById ('losses')
 var wordDisplayArray = []
 var lettersGuessed = []
+var incorrectLetters = []
 var newLetter = true
 var allowedKey = /^[A-Za-z]+$/
 
 //Selects random word from provided word array bank
-var word = words[Math.floor(Math.random()*words.length)]
+//var word = words[Math.floor(Math.random()*words.length)]
+var word = "bananas"
+
 
 //loads word into a character array for later comparison
 var wordArray = Array.from(word)
 
 //loads an array = length of word, with underscores and converts to string to display to user
 for(let i=0; i<word.length; i++){
-  wordDisplayArray[i] = ("_")
+  wordDisplayArray[i] = ('_')
 } 
 var wordDisplay = wordDisplayArray.join('')
 
@@ -70,14 +73,26 @@ document.onkeyup = function(e) {
     return//not valid key
   }
 
+
+
 //replace underscores with valid letters
   for(let i=0; i<wordArray.length; i++){
     if(key == wordArray[i]){
       wordDisplayArray[i] = String(key)
     }
   }
+
+
+
+
+
+
+
+
+
+
   wordToGuessEL.textContent = wordDisplayArray.join('')
-  console.log(lettersGuessed)
+  console.log(incorrectLetters)
 }
 
 
