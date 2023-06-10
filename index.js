@@ -49,25 +49,26 @@ wordToGuessEL.textContent = (wordDisplay)
 document.onkeyup = function(e) {
   var key = String.fromCharCode(e.which)
   key = e.key.toLowerCase()
+  console.log(key)
+  
   //check if key is alphanumeric
-
   if(key.charAt() < 97 || key.charAt() >122){
     return
   }
-  console.log(key)
 
+//check if letter has been guessed before
   if(lettersGuessed.indexOf(key)== -1){
     for(let i=0; i<lettersGuessed.length; i++){
       if (key === lettersGuessed[i]){
-        return
+        return //duplicate letter
       }
     }
-    lettersGuessed.push(key)
+    lettersGuessed.push(key) //new letter, added to guessed list
   }
   else{
-    return
+    return//not valid key
   }
-  
+ console.log(lettersGuessed)
 }
 
 
