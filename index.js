@@ -23,6 +23,8 @@ var wordDisplayArray = []
 var lettersGuessedArray = []
 var incorrectLettersArray = []
 var remainingGuesses = 10
+var wins = 0
+var losses = 0
 
 //Selects random word from provided word array bank
 //var word = words[Math.floor(Math.random()*words.length)]
@@ -52,6 +54,7 @@ document.onkeyup = function(e) {
   var key = String.fromCharCode(e.which)
   key = e.key.toLowerCase()
   var correct = false
+  var solved = false
 
   
   //check if key is alphanumeric
@@ -74,7 +77,7 @@ document.onkeyup = function(e) {
 
 
 
-//replace underscores with valid letters
+//replace underscores with valid letters as user guesses
   for(let i=0; i<wordArray.length; i++){
     if(key == wordArray[i]){
       wordDisplayArray[i] = String(key)
@@ -85,21 +88,26 @@ document.onkeyup = function(e) {
 
 //if letter guessed is incorrect, add to inncorrect list
   if(correct === false){
-    incorrectLettersArray.push(key) 
-    remainingGuesses = ((remainingGuesses)-1)
+    incorrectLettersArray.push(key)
+    remainingGuesses--
+  } 
+  else{
+    remainingGuesses--
   }
 
-  if(correct){
-    remainingGuesses =((remainingGuesses)-1)
-  }
-
-
-
-
+  
   wordToGuess.textContent = wordDisplayArray.join('')
   incorrectLettersDisplay.textContent = incorrectLettersArray.join('')
   remainingGuessDisplay.textContent = remainingGuesses
 
+
+  
+  ///winning
+
+
+
+
 }
+
 
 
