@@ -12,18 +12,17 @@ var words = [
   'mango'
 ]
 
-var wordToGuessEL = document.getElementById('word-to-guess')
-var previousWordEl =  document.getElementById ('previous-word')
-var incorrectLettersEl = document.getElementById ('incorrect-letters')
-var remainingGuessesEl =  document.getElementById ('remaining-guesses')
-var scoreEL =  document.getElementById ('score')
-var winsEL = document.getElementById ('wins')
-var lossesEL = document.getElementById ('losses')
+var wordToGuess = document.getElementById('word-to-guess')
+var previousWord = document.getElementById('previous-word')
+var incorrectLettersDisplay = document.getElementById('incorrect-letters')
+var remainingGuessDisplay = document.getElementById('remaining-guesses')
+var score =  document.getElementById ('score')
+var winDisplay = document.getElementById('wins')
+var lossDisplay = document.getElementById('losses')
 var wordDisplayArray = []
-var lettersGuessed = []
-var incorrectLetters = []
-var newLetter = true
-var allowedKey = /^[A-Za-z]+$/
+var lettersGuessedArray = []
+var incorrectLettersArray = []
+var remainingGuesses = 10
 
 //Selects random word from provided word array bank
 //var word = words[Math.floor(Math.random()*words.length)]
@@ -40,20 +39,20 @@ for(let i=0; i<word.length; i++){
 var wordDisplay = wordDisplayArray.join('')
 
 //sets starting guesses
-remainingGuessesEl.textContent = 10
+remainingGuessDisplay.textContent = 10
 
 //display underscores representing word to guess 
-wordToGuessEL.textContent = (wordDisplay)
+wordToGuess.textContent = (wordDisplay)
 
 
 
 
 
 document.onkeyup = function(e) {
-  console.log(word)
   var key = String.fromCharCode(e.which)
   key = e.key.toLowerCase()
-  console.log(key)
+  var correct = false
+
   
   //check if key is alphanumeric
   if(key.charAt() < 97 || key.charAt() >122){
@@ -61,13 +60,13 @@ document.onkeyup = function(e) {
   }
 
 //check if letter has been guessed before
-  if(lettersGuessed.indexOf(key)== -1){
-    for(let i=0; i<lettersGuessed.length; i++){
-      if (key === lettersGuessed[i]){
+  if(lettersGuessedArray.indexOf(key)== -1){
+    for(let i=0; i<lettersGuessedArray.length; i++){
+      if (key === lettersGuessedArray[i]){
         return //duplicate letter
       }
     }
-    lettersGuessed.push(key) //new letter, added to guessed list
+    lettersGuessedArray.push(key) //new letter, added to guessed list
   }
   else{
     return//not valid key
@@ -79,20 +78,28 @@ document.onkeyup = function(e) {
   for(let i=0; i<wordArray.length; i++){
     if(key == wordArray[i]){
       wordDisplayArray[i] = String(key)
+      correct = true
     }
+  }
+
+
+//if letter guessed is incorrect, add to inncorrect list
+  if(correct === false){
+    incorrectLettersArray.push(key) 
+    remainingGuesses = ((remainingGuesses)-1)
+  }
+
+  if(correct){
+    remainingGuesses =((remainingGuesses)-1)
   }
 
 
 
 
+  wordToGuess.textContent = wordDisplayArray.join('')
+  incorrectLettersDisplay.textContent = incorrectLettersArray.join('')
+  remainingGuessDisplay.textContent = remainingGuesses
 
-
-
-
-
-
-  wordToGuessEL.textContent = wordDisplayArray.join('')
-  console.log(incorrectLetters)
 }
 
 
