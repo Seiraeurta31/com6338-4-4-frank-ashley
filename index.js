@@ -47,6 +47,7 @@ wordToGuessEL.textContent = (wordDisplay)
 
 
 document.onkeyup = function(e) {
+  console.log(word)
   var key = String.fromCharCode(e.which)
   key = e.key.toLowerCase()
   console.log(key)
@@ -68,7 +69,15 @@ document.onkeyup = function(e) {
   else{
     return//not valid key
   }
- console.log(lettersGuessed)
+
+//replace underscores with valid letters
+  for(let i=0; i<wordArray.length; i++){
+    if(key == wordArray[i]){
+      wordDisplayArray[i] = String(key)
+    }
+  }
+  wordToGuessEL.textContent = wordDisplayArray.join('')
+  console.log(lettersGuessed)
 }
 
 
