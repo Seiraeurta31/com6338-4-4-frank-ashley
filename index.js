@@ -20,7 +20,9 @@ var scoreEL =  document.getElementById ('score')
 var winsEL = document.getElementById ('wins')
 var lossesEL = document.getElementById ('losses')
 var wordDisplayArray = []
-
+var lettersGuessed = []
+var newLetter = true
+var allowedKey = /^[A-Za-z]+$/
 
 //Selects random word from provided word array bank
 var word = words[Math.floor(Math.random()*words.length)]
@@ -39,5 +41,33 @@ remainingGuessesEl.textContent = 10
 
 //display underscores representing word to guess 
 wordToGuessEL.textContent = (wordDisplay)
+
+
+
+
+
+document.onkeyup = function(e) {
+  var key = String.fromCharCode(e.which)
+  key = e.key.toLowerCase()
+  //check if key is alphanumeric
+
+  if(key.charAt() < 97 || key.charAt() >122){
+    return
+  }
+  console.log(key)
+
+  if(lettersGuessed.indexOf(key)== -1){
+    for(let i=0; i<lettersGuessed.length; i++){
+      if (key === lettersGuessed[i]){
+        return
+      }
+    }
+    lettersGuessed.push(key)
+  }
+  else{
+    return
+  }
+  
+}
 
 
