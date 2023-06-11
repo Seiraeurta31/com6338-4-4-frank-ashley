@@ -31,14 +31,11 @@ var totalLettersToSolve = 0
 
 //Selects random word from provided word array bank
 var word = words[Math.floor(Math.random()*words.length)]
-//var word = "bananas"
 
 
 //loads word into a character array for later comparison
 var wordArray = Array.from(word)
 totalLettersToSolve = wordArray.length
-
-console.log(word)
 
 //loads an array = length of word, with underscores and converts to string to display to user
 for(let i=0; i<word.length; i++){
@@ -85,7 +82,7 @@ document.onkeyup = function(e) {
       correct = true
     }
   }
-console.log(totalLettersToSolve)
+
 
 //if letter guessed is incorrect, add to inncorrect list
   if(correct === false){
@@ -96,8 +93,6 @@ console.log(totalLettersToSolve)
     remainingGuesses--
   }
 
-  console.log(incorrectLettersArray)
-  console.log (incorrectLettersDisplay.textContent)
   
 
   wordToGuess.textContent = wordDisplayArray.join('')
@@ -107,7 +102,7 @@ console.log(totalLettersToSolve)
  
 
   //winning - loosing
-  if(totalLettersToSolve == 0 && remainingGuesses > 0){
+  if(totalLettersToSolve == 0 && remainingGuesses >= 0){
     console.log("win")
     wins ++
     console.log(wins)
@@ -125,13 +120,8 @@ console.log(totalLettersToSolve)
 }
 
 function reset(lastWord, win, loss){
-  wordToGuess = document.getElementById('word-to-guess')
-  previousWord = document.getElementById('previous-word')
-  incorrectLettersDisplay = document.getElementById('incorrect-letters')
-  remainingGuessDisplay = document.getElementById('remaining-guesses')
-  score =  document.getElementById ('score')
-  winDisplay = document.getElementById('wins')
-  lossDisplay = document.getElementById('losses')
+
+  //resets variables to default (pulls in previous word, current win/loss total)
   wordDisplayArray = []
   lettersGuessedArray = []
   incorrectLettersArray = []
@@ -142,28 +132,28 @@ function reset(lastWord, win, loss){
   previousWord.textContent = lastWord
   console.log("reset triggered")
 
-
+  //chooses a new word
   word = words[Math.floor(Math.random()*words.length)]
-  //var word = "bananas"
 
+  //builds reference word array and stores length for total letters to solve
   wordArray = Array.from(word)
   totalLettersToSolve = wordArray.length
-
-  console.log(word)
 
   //loads an array = length of word, with underscores and converts to string to display to user
   for(let i=0; i<word.length; i++){
     wordDisplayArray[i] = ('_')
   } 
 
+  //creates string to display to user
   wordDisplay = wordDisplayArray.join('')
 
   //sets starting guesses
   remainingGuessDisplay.textContent = 10
 
-  //display underscores representing word to guess 
+  //displays blank word sring of underscores to user 
   wordToGuess.textContent = (wordDisplay)
 
+  //
   winDisplay.textContent = wins
   lossDisplay.textContent = losses
 
