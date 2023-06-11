@@ -60,7 +60,7 @@ document.onkeyup = function(e) {
     return
   }
 
-//check if letter has been guessed before
+  //check if letter has been guessed before
   if(lettersGuessedArray.indexOf(key)== -1){
     for(let i=0; i<lettersGuessedArray.length; i++){
       if (key === lettersGuessedArray[i]){
@@ -74,7 +74,7 @@ document.onkeyup = function(e) {
   }
 
 
-//replace underscores with valid letters as user guesses
+  //replace underscores with valid letters as user guesses
   for(let i=0; i<wordArray.length; i++){
     if(key == wordArray[i]){
       wordDisplayArray[i] = String(key)
@@ -84,7 +84,7 @@ document.onkeyup = function(e) {
   }
 
 
-//if letter guessed is incorrect, add to inncorrect list
+  //if letter guessed is incorrect, add to inncorrect list
   if(correct === false){
     incorrectLettersArray.push(key)
     remainingGuesses--
@@ -93,20 +93,19 @@ document.onkeyup = function(e) {
     remainingGuesses--
   }
 
-  
-
+  //Update display values
   wordToGuess.textContent = wordDisplayArray.join('')
   incorrectLettersDisplay.textContent = incorrectLettersArray.join('')
   remainingGuessDisplay.textContent = remainingGuesses
 
- 
 
-  //winning - loosing
+
+  //Winning - Loosing criteria + GAME RESET CALL
   if(totalLettersToSolve == 0 && remainingGuesses >= 0){
     console.log("win")
     wins ++
     console.log(wins)
-    reset(word, wins, losses)
+    reset(word, wins, losses) 
     return
   }
   else if(totalLettersToSolve > 0 && remainingGuesses == 0){
