@@ -20,20 +20,21 @@ var score =  document.getElementById ('score')
 var winDisplay = document.getElementById('wins')
 var lossDisplay = document.getElementById('losses')
 var wordDisplayArray = []
+var wordDisplay = " "
 var lettersGuessedArray = []
 var incorrectLettersArray = []
 var remainingGuesses = 10
 var wins = 0
 var losses = 0
+var keysAllowed = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 var totalLettersToSolve = 0
+remainingGuessDisplay.textContent = 10
 
 
-
-//Selects random word from provided word array bank
+//Selects random word from provided word array bank, loads word into a character array for later comparison
 var word = words[Math.floor(Math.random()*words.length)]
+console.log(word)
 
-
-//loads word into a character array for later comparison
 var wordArray = Array.from(word)
 totalLettersToSolve = wordArray.length
 
@@ -41,10 +42,8 @@ totalLettersToSolve = wordArray.length
 for(let i=0; i<word.length; i++){
   wordDisplayArray[i] = ('_')
 } 
-var wordDisplay = wordDisplayArray.join('')
+wordDisplay = wordDisplayArray.join('')
 
-//sets starting guesses
-remainingGuessDisplay.textContent = 10
 
 //display underscores representing word to guess 
 wordToGuess.textContent = (wordDisplay)
@@ -54,68 +53,83 @@ document.onkeyup = function(e) {
   var key = String.fromCharCode(e.which)
   key = e.key.toLowerCase()
   var correct = false
- 
-  //check if key is alphanumeric
-  if(key.charAt() < 97 || key.charAt() >122){
-    return
-  }
+  var keyApproved = false
 
-  //check if letter has been guessed before
-  if(lettersGuessedArray.indexOf(key)== -1){
-    for(let i=0; i<lettersGuessedArray.length; i++){
-      if (key === lettersGuessedArray[i]){
-        return //duplicate letter
+  
+  console.log(key)
+  console.log(keysAllowed)
+  console.log(key === keysAllowed)
+
+  //check if key is alphanumeric
+  for(let i=0; i<keysAllowed.length; i++){
+    if(key === keysAllowed[i]){
+      keyApproved = true
+    }
+  }
+  
+  if(keyApproved){
+
+    //check if letter has been guessed before
+    if(lettersGuessedArray.indexOf(key)== -1){
+      for(let i=0; i<lettersGuessedArray.length; i++){
+        if (key === lettersGuessedArray[i]){
+          return //duplicate letter
+        }
+      }
+      lettersGuessedArray.push(key) //new letter, added to guessed list
+    }
+    else{
+      return//not valid key
+    }
+
+
+    //replace underscores with valid letters as user guesses
+    for(let i=0; i<wordArray.length; i++){
+      if(key == wordArray[i]){
+        wordDisplayArray[i] = String(key)
+        totalLettersToSolve --
+        correct = true
       }
     }
-    lettersGuessedArray.push(key) //new letter, added to guessed list
-  }
-  else{
-    return//not valid key
-  }
 
 
-  //replace underscores with valid letters as user guesses
-  for(let i=0; i<wordArray.length; i++){
-    if(key == wordArray[i]){
-      wordDisplayArray[i] = String(key)
-      totalLettersToSolve --
-      correct = true
+    //if letter guessed is incorrect, add to inncorrect list
+    if(correct === false){
+      incorrectLettersArray.push(key)
+      remainingGuesses--
+    } 
+
+
+    //Update display values
+    wordToGuess.textContent = wordDisplayArray.join('')
+    incorrectLettersDisplay.textContent = incorrectLettersArray.join('')
+    remainingGuessDisplay.textContent = remainingGuesses
+
+
+
+    //Winning - Loosing criteria + GAME RESET CALL
+    if(totalLettersToSolve == 0 && remainingGuesses >= 0){
+      wins ++
+      reset(word, wins, losses) 
+      return
     }
+    else if(totalLettersToSolve > 0 && remainingGuesses == 0){
+      losses ++
+      reset(word, wins, losses)
+      return
+    }
+
   }
-
-
-  //if letter guessed is incorrect, add to inncorrect list
-  if(correct === false){
-    incorrectLettersArray.push(key)
-    remainingGuesses--
-  } 
   else{
-    remainingGuesses--
-  }
-
-  //Update display values
-  wordToGuess.textContent = wordDisplayArray.join('')
-  incorrectLettersDisplay.textContent = incorrectLettersArray.join('')
-  remainingGuessDisplay.textContent = remainingGuesses
-
-
-
-  //Winning - Loosing criteria + GAME RESET CALL
-  if(totalLettersToSolve == 0 && remainingGuesses >= 0){
-    wins ++
-    console.log(wins)
-    reset(word, wins, losses) 
     return
   }
-  else if(totalLettersToSolve > 0 && remainingGuesses == 0){
-    losses ++
-    console.log(losses)
-    reset(word, wins, losses)
-    return
-  }
+
+  
 
 }
 
+
+//RESET FUNCTION
 function reset(lastWord, win, loss){
 
   //resets variables to default (pulls in previous word, current win/loss total)
@@ -131,25 +145,21 @@ function reset(lastWord, win, loss){
   //chooses a new word
   word = words[Math.floor(Math.random()*words.length)]
 
-  //builds reference word array and stores length for total letters to solve
+  //builds new reference word array and stores length for total letters to solve
+  //loads an array = length of word, with underscores and converts to string to display to user
   wordArray = Array.from(word)
   totalLettersToSolve = wordArray.length
 
-  //loads an array = length of word, with underscores and converts to string to display to user
   for(let i=0; i<word.length; i++){
     wordDisplayArray[i] = ('_')
   } 
 
-  //creates string to display to user
   wordDisplay = wordDisplayArray.join('')
 
-  //sets starting guesses
+  //Resets display info 
   remainingGuessDisplay.textContent = 10
-
-  //displays blank word sring of underscores to user 
   wordToGuess.textContent = (wordDisplay)
-
-  //
+  incorrectLettersDisplay.textContent = " "
   winDisplay.textContent = wins
   lossDisplay.textContent = losses
 
