@@ -33,7 +33,6 @@ remainingGuessDisplay.textContent = 10
 
 //Selects random word from provided word array bank, loads word into a character array for later comparison
 var word = words[Math.floor(Math.random()*words.length)]
-console.log(word)
 
 var wordArray = Array.from(word)
 totalLettersToSolve = wordArray.length
