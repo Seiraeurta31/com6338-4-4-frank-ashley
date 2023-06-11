@@ -102,14 +102,12 @@ document.onkeyup = function(e) {
 
   //Winning - Loosing criteria + GAME RESET CALL
   if(totalLettersToSolve == 0 && remainingGuesses >= 0){
-    console.log("win")
     wins ++
     console.log(wins)
     reset(word, wins, losses) 
     return
   }
   else if(totalLettersToSolve > 0 && remainingGuesses == 0){
-    console.log("lost")
     losses ++
     console.log(losses)
     reset(word, wins, losses)
@@ -129,7 +127,6 @@ function reset(lastWord, win, loss){
   losses = loss
   totalLettersToSolve = 0
   previousWord.textContent = lastWord
-  console.log("reset triggered")
 
   //chooses a new word
   word = words[Math.floor(Math.random()*words.length)]
