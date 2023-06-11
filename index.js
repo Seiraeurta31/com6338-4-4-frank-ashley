@@ -53,14 +53,11 @@ remainingGuessDisplay.textContent = 10
 wordToGuess.textContent = (wordDisplay)
 
 
-
 document.onkeyup = function(e) {
   var key = String.fromCharCode(e.which)
   key = e.key.toLowerCase()
   var correct = false
-
-
-  
+ 
   //check if key is alphanumeric
   if(key.charAt() < 97 || key.charAt() >122){
     return
@@ -166,5 +163,8 @@ function reset(lastWord, win, loss){
 
   //display underscores representing word to guess 
   wordToGuess.textContent = (wordDisplay)
+
+  winDisplay.textContent = wins
+  lossDisplay.textContent = losses
 
 }
