@@ -50,15 +50,9 @@ wordToGuess.textContent = (wordDisplay)
 
 
 document.onkeyup = function(e) {
-  var key = String.fromCharCode(e.which)
   key = e.key.toLowerCase()
   var correct = false
   var keyApproved = false
-
-  
-  console.log(key)
-  console.log(keysAllowed)
-  console.log(key === keysAllowed)
 
   //check if key is alphanumeric
   for(let i=0; i<keysAllowed.length; i++){
@@ -67,23 +61,20 @@ document.onkeyup = function(e) {
     }
   }
   
+
   if(keyApproved){
 
-    //check if letter has been guessed before
-    if(lettersGuessedArray.indexOf(key)== -1){
-      for(let i=0; i<lettersGuessedArray.length; i++){
-        if (key === lettersGuessedArray[i]){
-          return //duplicate letter
-        }
+    //Letter has been guessed already? Exit or store new guess
+    for(let i=0; i<lettersGuessedArray.length; i++){
+      if (key === lettersGuessedArray[i]){
+        return //quessed already, exit
       }
-      lettersGuessedArray.push(key) //new letter, added to guessed list
     }
-    else{
-      return//not valid key
-    }
+    lettersGuessedArray.push(key) //add to guess list
 
 
-    //replace underscores with valid letters as user guesses
+
+    //Letter guess is correct: replace underscores with valid letters as user guesses
     for(let i=0; i<wordArray.length; i++){
       if(key == wordArray[i]){
         wordDisplayArray[i] = String(key)
@@ -92,19 +83,16 @@ document.onkeyup = function(e) {
       }
     }
 
-
-    //if letter guessed is incorrect, add to inncorrect list
+    //Letter guess is incorrect: add to inncorrect list
     if(correct === false){
       incorrectLettersArray.push(key)
       remainingGuesses--
     } 
 
-
     //Update display values
     wordToGuess.textContent = wordDisplayArray.join('')
     incorrectLettersDisplay.textContent = incorrectLettersArray.join('')
     remainingGuessDisplay.textContent = remainingGuesses
-
 
 
     //Winning - Loosing criteria + GAME RESET CALL
@@ -123,9 +111,6 @@ document.onkeyup = function(e) {
   else{
     return
   }
-
-  
-
 }
 
 
