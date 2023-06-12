@@ -33,7 +33,7 @@ var totalLettersToSolve = 0
 //Selects random word from provided word array bank, loads word into a character array for later key comparison
 var word = words[Math.floor(Math.random()*words.length)]
 var wordArray = Array.from(word)
-totalLettersToSolve = wordArray.length
+totalLettersToSolve = wordCharArray.length
 
 //loads an array = length of word, with underscores and converts to string to display to user
 for(let i=0; i<word.length; i++){
