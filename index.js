@@ -30,9 +30,8 @@ var keysAllowed = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','
 var totalLettersToSolve = 0
 
 
-//Selects random word from provided word array bank, loads word into a character array for later comparison
+//Selects random word from provided word array bank, loads word into a character array for later key comparison
 var word = words[Math.floor(Math.random()*words.length)]
-
 var wordArray = Array.from(word)
 totalLettersToSolve = wordArray.length
 
@@ -76,13 +75,13 @@ document.onkeyup = function(e) {
     //Letter guess is correct: replace underscores with valid letters as user guesses
     for(let i=0; i<wordArray.length; i++){
       if(key == wordArray[i]){
-        wordDisplayArray[i] = String(key)
+        wordDisplayArray[i] = key
         totalLettersToSolve --
         correct = true
       }
     }
 
-    //Letter guess is incorrect: add to inncorrect list
+    //Letter guess is incorrect: add to inncorrect list & reduce guesses
     if(correct === false){
       incorrectLettersArray.push(key)
       remainingGuesses--
